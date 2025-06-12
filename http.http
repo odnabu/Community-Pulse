@@ -1,0 +1,138 @@
+#  ### — это разделитель между запросами, рекомендованный в PyCharm.
+# В заголовке content-type нельзя указывать JSON.
+# Должно быть разделение между заголовками и телом запроса.
+
+# _______________ QUESTIONS ___________________________________________________________________________
+
+### Questions - GET - получить ВСЕ вопросы из БД.
+GET http://127.0.0.1:5000/questions/ HTTP/1.1
+content-type: application/json
+
+### Questions - POST - создать вопрос
+POST http://127.0.0.1:5000/questions/
+Content-Type: application/json
+
+# Варианты:
+# user 1: Is AI a miracle?
+# user 1: Is AI smart?
+# user 1: The weather today is bad?
+# user 2: Is the weather nice today?
+# user 2: Do peonies bloom in your garden?
+# user 2: Do you like the smell of peonies?
+# user 2: Do you feel more alive in April than in winter?
+# user 2: Do you usually take walks in May?
+
+# user 1: Can AI ever truly understand human emotions?
+# user 1: Do you trust AI to make decisions for you?
+
+# user 3: Have you ever been at the Ocean shore?
+# user 3: Do you think the ocean is wonderful?
+# user 3: Have you ever traveled alone?
+# user 3: Would you like to visit a place you’ve never heard of?
+# user _: _
+
+{
+  "text": "Do you trust AI to make decisions for you?",
+  "user_id": 1
+}
+
+### Questions - GET - получить вопрос по ID из БД. Ввести эндпоинт /1.
+GET http://127.0.0.1:5000/questions/1 HTTP/1.1
+content-type: application/json
+
+### Questions - DELETE - УДАЛИТЬ вопрос по ID (вопрос 1) из БД. Ввести эндпоинт /1.
+DELETE  http://127.0.0.1:5000/questions/14 HTTP/1.1
+content-type: application/json
+
+### Questions - PUT - ИЗМЕНИТЬ вопрос по ID  (вопрос 1) из БД. Ввести эндпоинт /1.
+PUT  http://127.0.0.1:5000/questions/1 HTTP/1.1
+content-type: application/json
+
+{
+     "text": "Is AI dangerous?"
+}
+
+
+
+// ###  _______________  RESPONSES ___________________________________________________________________________
+
+### Responses - GET - получить ВСЕ ответы на вопросы из БД
+GET http://127.0.0.1:5000/responses/ HTTP/1.1
+content-type: application/json
+
+### Responses - POST - ОТПРАВИТЬ ответ на вопрос 1 в БД
+POST http://127.0.0.1:5000/responses/ HTTP/1.1
+content-type: application/json
+
+# VARIANTS
+# q1, user 3: Yes, but it was originally created by people. And now it has become a miracle.
+# q_, user _: _
+
+{
+    "question_id": 15,
+    "is_agree": false,
+    "text": "",
+    "user_id": 3
+}
+
+### Responses - GET - получить ответ по ID (ответ 1) из БД. Ввести эндпоинт /1.
+GET http://127.0.0.1:5000/responses/15 HTTP/1.1
+content-type: application/json
+
+### Responses - DELETE - УДАЛИТЬ ответ по ID (ответ 2) из БД. Ввести эндпоинт /1.
+DELETE  http://127.0.0.1:5000/responses/2 HTTP/1.1
+content-type: application/json
+
+### Responses - PUT - ИЗМЕНИТЬ ответ по ID (ответ 2) из БД. Ввести эндпоинт /2.
+PUT  http://127.0.0.1:5000/responses/2 HTTP/1.1
+content-type: application/json
+
+{
+    "question_id": 2,
+    "is_agree": false,
+    "text": "No, it is wonderful day :)"
+}
+
+
+
+// ###  _______________  USERS ___________________________________________________________________________
+
+### Users - GET - получить список ВСЕХ пользователей из БД
+GET http://127.0.0.1:5000/users/ HTTP/1.1
+content-type: application/json; charset=UTF-8
+
+### Users - GET - получить пользователя по ID
+GET http://127.0.0.1:5000/users/1 HTTP/1.1
+content-type: application/json; charset=UTF-8
+
+### Users - POST - создать пользователя и задать пароль
+POST http://127.0.0.1:5000/users/ HTTP/1.1
+content-type: application/json; charset=UTF-8
+
+# VARIANTS
+# user 1: Arthur Arthur_bro
+# user 2: Falkor 456Falkor
+# user 3: Masiya 123Masiya
+# user 4: Noname 000N
+# user 5: Test for Delete Anon123
+
+{
+    "nickname": "Test for Delete",
+    "password": "Anon123",
+    "repeat_password": "Anon123"
+}
+
+### Users - PUT - ИЗМЕНИТЬ пользователя по ID (пользователь с id=4) из БД. Ввести эндпоинт /4.
+PUT  http://127.0.0.1:5000/users/4 HTTP/1.1
+content-type: application/json; charset=UTF-8
+
+{
+    "nickname": "New_Noname",
+    "password": "888",
+    "repeat_password": "888"
+}
+
+### Users - DELETE -  УДАЛИТЬ пользователя по ID (пользователь с id=1) из БД. Ввести эндпоинт /1.
+DELETE  http://127.0.0.1:5000/users/5 HTTP/1.1
+content-type: application/json; charset=UTF-8
+
