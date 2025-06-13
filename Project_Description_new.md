@@ -21,14 +21,15 @@ flask db upgrade
 python run.py
 ```
 3. В файле <a>http.http</a> выбрать ЗАПРОС на получение списка вопросов и выполнить его.  
-4. Перейти по адресу (добавить эндпоинт /questions):  http://127.0.0.1:5000/questions/.  
-Должен появиться JSON:  
+4. Можно отслеживать в консоли. А можно ПЕРЕЙТИ по адресу (добавить эндпоинт, например, 
+/questions):  http://127.0.0.1:5000/questions/. Должен появиться JSON:  
 
 <img src="other/figs/img.png" width="350" alt=""/>
 
 <a id="img1" style="margin: 40px; color:#808080;">Fig. 1 - Код приложения: app.js, часть 1.</a>
 
-4. В файле <a>http.http</a> выполнить запросы на СОЗДАНИЕ юзеров, вопросов и ответов на них.  
+4. В файлах <a>http_.http</a> выполнить запросы на СОЗДАНИЕ юзеров, вопросов и 
+ответов на них. А так же сделать вывод запросов со статистикой.  
 <div style="font: bold normal 110% sans-serif; color: #8A2BE2; white-space: pre; border-top: 2px dotted #008000; padding: 5px;"></div>  
 
 
@@ -40,8 +41,9 @@ python run.py
 
 
 # <a id="s3"><font color="green">3. Модель User</font></a>  
-См. Video от 10.06.2025: Python Advanced 4: Flask: 
-Summary session 1, __:__.
+См. Video от 11.06.2025: Python Advanced 4: Flask: 
+Summary session 1, где-то с середины видео, хотя я уже не уверена 
+<span style="color:red">__???:???__</span>.
 <div style="font: bold normal 110% sans-serif; color: #8A2BE2; white-space: pre; border-top: 2px dotted #008000; padding: 5px;"></div>  
 
 
