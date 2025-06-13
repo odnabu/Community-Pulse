@@ -1,0 +1,58 @@
+#  ### — это разделитель между запросами, рекомендованный в PyCharm.
+# В заголовке content-type нельзя указывать JSON.
+# Должно быть разделение между заголовками и телом запроса.
+
+# _______________ QUESTIONS ___________________________________________________________________________
+
+### Questions - GET - получить ВСЕ вопросы из БД.
+GET http://127.0.0.1:5000/questions/ HTTP/1.1
+content-type: application/json
+
+### Questions - POST - создать вопрос
+POST http://127.0.0.1:5000/questions/
+Content-Type: application/json
+
+# Categories:
+# 1: AI
+# 2: Trips
+# 3: Other
+# Варианты:
+# user 1: Is AI smart?
+# user 1: Is AI a miracle?
+# user 1: Can AI ever truly understand human emotions?
+# user 1: Do you trust AI to make decisions for you?
+
+# user 2: The weather today is bad?
+# user 2: Is the weather nice today?
+# user 2: Do peonies bloom in your garden?
+# user 2: Do you like the smell of peonies?
+# user 2: Do you feel more alive in April than in winter?
+# user 2: Do you usually take walks in May?
+
+# user 3: Have you ever been at the Ocean shore?
+# user 3: Do you think the ocean is wonderful?
+# user 3: Have you ever traveled alone?
+# user 3: Would you like to visit a place you’ve never heard of?
+# user _: _
+
+{
+  "text": "Do peonies bloom in your garden?",
+  "user_id": 2,
+  "category_id": 3
+}
+
+### Questions - GET - получить вопрос по ID из БД. Ввести эндпоинт /1.
+GET http://127.0.0.1:5000/questions/1 HTTP/1.1
+content-type: application/json
+
+### Questions - DELETE - УДАЛИТЬ вопрос по ID (вопрос 2) из БД. Ввести эндпоинт /1.
+DELETE  http://127.0.0.1:5000/questions/2 HTTP/1.1
+content-type: application/json
+
+### Questions - PUT - ИЗМЕНИТЬ вопрос по ID  (вопрос 1) из БД. Ввести эндпоинт /1.
+PUT  http://127.0.0.1:5000/questions/1 HTTP/1.1
+content-type: application/json
+
+{
+     "text": "Is AI dangerous?"
+}

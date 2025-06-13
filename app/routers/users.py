@@ -1,3 +1,5 @@
+# app/routers/users.py
+
 from flask import Blueprint, jsonify, request
 from pydantic import ValidationError
 from app.models.user import User
@@ -14,8 +16,7 @@ logger = logging.getLogger(__name__)
 users_bp = Blueprint('users', __name__, url_prefix='/users')
 
 
-
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# ===============================================================================================================
 # to GET all users
 @users_bp.route('/', methods=['GET'])
 def get_users():
@@ -28,8 +29,7 @@ def get_users():
         return jsonify(MessageResponse(message='No user was found.').model_dump()), 404
 
 
-
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# ===============================================================================================================
 # to CREATE a new user
 @users_bp.route('/', methods=['POST'])
 def create_user():
@@ -47,8 +47,7 @@ def create_user():
         return jsonify(MessageResponse(message='Unknown error. Try again.').model_dump()), 400
 
 
-
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# ===============================================================================================================
 # to GET one user by ID
 @users_bp.route('/<int:id>', methods=['GET'])
 def get_user(id):
@@ -61,8 +60,7 @@ def get_user(id):
         return jsonify(MessageResponse(message=f"No user with id {id} was found.").model_dump())
 
 
-
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# ===============================================================================================================
 # to UPDATE / CHANGE an existed user
 @users_bp.route('/<int:id>', methods=['PUT'])
 def update_user(id):
@@ -82,7 +80,7 @@ def update_user(id):
         return jsonify(MessageResponse(message=f"No user with id {id} was found.").model_dump()), 404
 
 
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# ===============================================================================================================
 # creating a function to DELETE a user
 @users_bp.route('/<int:id>', methods=['DELETE'])
 def delete_user(id):
@@ -95,4 +93,13 @@ def delete_user(id):
     else:
         return jsonify(MessageResponse(message=f"No user with id {id} was found.").model_dump()), 404
 
+
+""" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%____      STATISTICS     ____%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% """
+
+# Сколько всего пользователей зарегистрировано
+@users_bp.route('/statistics/count', methods=['GET'])
+def get_user_count():
+    from app.models.user import User
+    count = db.session.query(User).count()
+    return jsonify(MessageResponse(message={"user_count": count}).model_dump()), 200
 

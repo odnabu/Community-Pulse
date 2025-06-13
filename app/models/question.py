@@ -1,3 +1,5 @@
+# app/models/question.py
+
 from app.models import db
 
 
@@ -8,10 +10,15 @@ class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='NO ACTION'), nullable=True)
     text = db.Column(db.String(255), nullable=False)
+    # Добавление столбца с id категории:
+    category_id = db.Column(db.Integer,
+                            db.ForeignKey('categories.id', name='fk_question_category', ondelete='NO ACTION'),
+                            nullable=True)
 
     # creating relationships to other models
     user = db.relationship('User', back_populates='questions', lazy=True, cascade='none')
     responses = db.relationship('Response', back_populates='question', lazy=True, cascade='all, delete-orphan')
+    category = db.relationship('Category', back_populates='questions', lazy=True, cascade='none')
 
 
     def __repr__(self):

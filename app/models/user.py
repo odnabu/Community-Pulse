@@ -1,3 +1,5 @@
+# app/models/user.py
+
 from app.models import db
 
 

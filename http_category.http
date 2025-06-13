@@ -1,0 +1,25 @@
+#  ### — это разделитель между запросами, рекомендованный в PyCharm.
+# В заголовке content-type нельзя указывать JSON.
+# Должно быть разделение между заголовками и телом запроса.
+
+// ###  _______________  CATEGORY  ___________________________________________________________________________
+
+### Category - GET - получить список ВСЕХ категорий из БД
+GET http://127.0.0.1:5000/categories/ HTTP/1.1
+content-type: application/json; charset=UTF-8
+
+### Category - GET - получить категорию по ID
+GET http://127.0.0.1:5000/categories/1 HTTP/1.1
+content-type: application/json; charset=UTF-8
+
+### Category - POST - создать категорию
+POST http://127.0.0.1:5000/categories/ HTTP/1.1
+content-type: application/json; charset=UTF-8
+# VARIANTS
+# 1: AI
+# 2: Trips
+# 3: Other
+
+{
+    "name": "Other"
+}

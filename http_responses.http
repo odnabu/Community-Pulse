@@ -1,0 +1,42 @@
+#  ### — это разделитель между запросами, рекомендованный в PyCharm.
+# В заголовке content-type нельзя указывать JSON.
+# Должно быть разделение между заголовками и телом запроса.
+
+// ###  _______________  RESPONSES ___________________________________________________________________________
+
+### Responses - GET - получить ВСЕ ответы на вопросы из БД
+GET http://127.0.0.1:5000/responses/ HTTP/1.1
+content-type: application/json
+
+### Responses - POST - ОТПРАВИТЬ ответ на вопрос 1 в БД
+POST http://127.0.0.1:5000/responses/ HTTP/1.1
+content-type: application/json
+
+# VARIANTS
+# q1, user 3: Yes, but it was originally created by people. And now it has become a miracle.
+# q_, user _: _
+
+{
+    "question_id": 2,
+    "is_agree": true,
+    "text": "",
+    "user_id": 3
+}
+
+### Responses - GET - получить ответ по ID (ответ 2) из БД. Ввести эндпоинт /1.
+GET http://127.0.0.1:5000/responses/2 HTTP/1.1
+content-type: application/json
+
+### Responses - DELETE - УДАЛИТЬ ответ по ID (ответ 2) из БД. Ввести эндпоинт /1.
+DELETE  http://127.0.0.1:5000/responses/2 HTTP/1.1
+content-type: application/json
+
+### Responses - PUT - ИЗМЕНИТЬ ответ по ID (ответ 2) из БД. Ввести эндпоинт /2.
+PUT  http://127.0.0.1:5000/responses/2 HTTP/1.1
+content-type: application/json
+
+{
+    "question_id": 2,
+    "is_agree": false,
+    "text": "No, it is wonderful day :)"
+}

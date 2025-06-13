@@ -1,3 +1,5 @@
+# app/routers/questions.py
+
 from flask import Blueprint, request, jsonify
 from pydantic import ValidationError
 from app.models.question import Question
@@ -14,13 +16,14 @@ logger = logging.getLogger(__name__)
 questions_bp = Blueprint('questions', __name__, url_prefix='/questions')
 
 
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# ===============================================================================================================
 # to GET all questions
 @questions_bp.route('/', methods=['GET'])
 def get_questions():
     questions = Question.query.all()
     # creating a dictionary of all gotten questions like [{1: 'text', 2: 'text'}]
-    serialized = [QuestionSchema(id=q.id, text=q.text, user_id=q.user.id, user_nickname=q.user.nickname).model_dump() for q in questions]
+    serialized = [QuestionSchema(id=q.id, text=q.text, user_id=q.user.id,
+                                 user_nickname=q.user.nickname).model_dump() for q in questions]
 
     # checking if any questions were found
     if questions:
@@ -29,8 +32,7 @@ def get_questions():
         return jsonify(MessageResponse(message="No questions found").model_dump()), 404
 
 
-
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# ===============================================================================================================
 # to CREATE a new question
 @questions_bp.route('/', methods=['POST'])
 def create_question():
@@ -47,8 +49,7 @@ def create_question():
         return jsonify({'error': e.errors}), 400
 
 
-
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# ===============================================================================================================
 # creating a function to GET question by ID with method "GET"
 @questions_bp.route('/<int:id>', methods=['GET'])
 def get_question(id):
@@ -64,8 +65,7 @@ def get_question(id):
         return jsonify(MessageResponse(message=f"No question with id {id} was found.").model_dump())
 
 
-
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# ===============================================================================================================
 # creating a function to UPDATE a question by ID with method "PUT"
 @questions_bp.route('/<int:id>', methods=['PUT'])
 def update_question(id):
@@ -84,8 +84,7 @@ def update_question(id):
         return jsonify(MessageResponse(message=f"No question with id {id} was found.").model_dump()), 404
 
 
-
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# ===============================================================================================================
 # creating a function to DELETE a question
 @questions_bp.route('/<int:id>', methods=['DELETE'])
 def delete_question(id):
@@ -97,3 +96,15 @@ def delete_question(id):
         return jsonify(MessageResponse(message=f"The question with id {id} was deleted.").model_dump()), 200
     else:
         return jsonify(MessageResponse(message=f"No question with id {id} was found.").model_dump()), 404
+
+
+
+""" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%____      STATISTICS     ____%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% """
+
+# Сколько всего вопросов в БД
+@questions_bp.route('/statistics/count', methods=['GET'])
+def get_question_count():
+    from app.models.question import Question
+    count = db.session.query(Question).count()
+    return jsonify(MessageResponse(message={"question_count": count}).model_dump()), 200
+

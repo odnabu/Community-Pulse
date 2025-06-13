@@ -1,0 +1,44 @@
+#  ### — это разделитель между запросами, рекомендованный в PyCharm.
+# В заголовке content-type нельзя указывать JSON.
+# Должно быть разделение между заголовками и телом запроса.
+
+// ###  _______________  USERS ___________________________________________________________________________
+
+### Users - GET - получить список ВСЕХ пользователей из БД
+GET http://127.0.0.1:5000/users/ HTTP/1.1
+content-type: application/json; charset=UTF-8
+
+### Users - GET - получить пользователя по ID
+GET http://127.0.0.1:5000/users/1 HTTP/1.1
+content-type: application/json; charset=UTF-8
+
+### Users - POST - создать пользователя и задать пароль
+POST http://127.0.0.1:5000/users/ HTTP/1.1
+content-type: application/json; charset=UTF-8
+
+# VARIANTS
+# user 1: Man Man_123
+# user 2: Falkor 456Falkor
+# user 3: Masiya 123Masiya
+# user 4: Noname 000N
+# user 5: Test for Delete Anon123
+
+{
+    "nickname": "Noname",
+    "password": "000N",
+    "repeat_password": "000N"
+}
+
+### Users - PUT - ИЗМЕНИТЬ пользователя по ID (пользователь с id=4) из БД. Ввести эндпоинт /4.
+PUT  http://127.0.0.1:5000/users/4 HTTP/1.1
+content-type: application/json; charset=UTF-8
+
+{
+    "nickname": "New_Noname",
+    "password": "888",
+    "repeat_password": "888"
+}
+
+### Users - DELETE -  УДАЛИТЬ пользователя по ID (пользователь с id=1) из БД. Ввести эндпоинт /1.
+DELETE  http://127.0.0.1:5000/users/5 HTTP/1.1
+content-type: application/json; charset=UTF-8

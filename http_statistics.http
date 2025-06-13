@@ -1,0 +1,24 @@
+#  ### — это разделитель между запросами, рекомендованный в PyCharm.
+# В заголовке content-type нельзя указывать JSON.
+# Должно быть разделение между заголовками и телом запроса.
+
+// ###  _______________  STATISTICS  ___________________________________________________________________________
+
+### Statistics - GET - получить статистику по ответам:
+GET http://127.0.0.1:5000/responses/statistics/ HTTP/1.1
+content-type: application/json; charset=UTF-8
+
+### Statistics - GET - Сколько всего положительных ответов:
+GET http://127.0.0.1:5000/responses/statistics/agree
+
+### Statistics - GET - Сколько всего отрицательных ответов (is_agree=False):
+GET http://127.0.0.1:5000/responses/statistics/disagree
+
+### Statistics - GET - Сколько ответов получено на вопрос с определённым question_id:
+GET http://127.0.0.1:5000/responses/statistics/question/1
+
+### Statistics - GET - Сколько всего вопросов в БД:
+GET http://127.0.0.1:5000/questions/statistics/count
+
+### Statistics - GET - Сколько всего пользователей зарегистрировано:
+GET http://127.0.0.1:5000/users/statistics/count
