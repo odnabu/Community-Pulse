@@ -16,17 +16,15 @@ content-type: application/json; charset=UTF-8
 POST http://127.0.0.1:5000/users/ HTTP/1.1
 content-type: application/json; charset=UTF-8
 
-# VARIANTS
-# user 1: Man Man_123
-# user 2: Falkor 456Falkor
-# user 3: Masiya 123Masiya
-# user 4: Noname 000N
-# user 5: Test for Delete Anon123
+# ___ Users
+# user 1: Ich Ich_123                   # user 4: Falkor 456Falkor
+# user 2: Man Man_456                   # user 5: Noname 000N
+# user 3: Masiya 123Masiya              # user 6: Test for Delete Anon123
 
 {
-    "nickname": "Noname",
-    "password": "000N",
-    "repeat_password": "000N"
+    "nickname": "Test for Delete",
+    "password": "Anon123",
+    "repeat_password": "Anon123"
 }
 
 ### Users - PUT - ИЗМЕНИТЬ пользователя по ID (пользователь с id=4) из БД. Ввести эндпоинт /4.

@@ -41,7 +41,9 @@ def create_question():
 
     try:
         question_data = QuestionCreate(**input_data)
-        question = Question(text=question_data.text, user_id=question_data.user_id)
+        question = Question(text=question_data.text,
+                            user_id=question_data.user_id,
+                            category_id=question_data.category_id)
         db.session.add(question)
         db.session.commit()
         return jsonify(MessageResponse(message="Your question was created!").model_dump()), 201
@@ -59,6 +61,7 @@ def get_question(id):
     if question:
         return jsonify(MessageResponse(message=QuestionSchema(id=question.id,
                                                               text=question.text,
+                                                              category_id=question.category_id,
                                                               user_id=question.user.id,
                                                               user_nickname=question.user.nickname).model_dump()).model_dump())
     else:
@@ -66,7 +69,7 @@ def get_question(id):
 
 
 # ===============================================================================================================
-# creating a function to UPDATE a question by ID with method "PUT"
+# Функция ОБНОВЛЕНИЯ вопроса по ID по методу "PUT"
 @questions_bp.route('/<int:id>', methods=['PUT'])
 def update_question(id):
     question = Question.query.get(id)
@@ -75,7 +78,9 @@ def update_question(id):
     if question:
         try:
             updated_data = QuestionUpdate(**input_data)
-            question.text, question.user_id = updated_data.text, updated_data.user_id
+            question.text = updated_data.text
+            question.user_id = updated_data.user_id
+            question.category_id = updated_data.category_id
             db.session.commit()
             return jsonify(MessageResponse(message=f"The question with id {id} was updated.").model_dump()), 200
         except ValidationError as e:
@@ -107,4 +112,3 @@ def get_question_count():
     from app.models.question import Question
     count = db.session.query(Question).count()
     return jsonify(MessageResponse(message={"question_count": count}).model_dump()), 200
-

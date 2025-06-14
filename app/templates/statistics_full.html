@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Community Pulse — Statistics</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f7fa;
+            padding: 2rem;
+            color: #333;
+        }
+        h1 {
+            color: #1e88e5;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 1rem;
+            text-align: left;
+        }
+        th {
+            background-color: #e3f2fd;
+            color: #1565c0;
+        }
+        tr:nth-child(even) {
+            background-color: #f9fbfd;
+        }
+        tr:hover {
+            background-color: #e1f5fe;
+        }
+    </style>
+</head>
+<body>
+    <h1>📊 Community Pulse — Ответы на вопросы</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Вопрос</th>
+                <th>Согласны</th>
+                <th>Не согласны</th>
+                <th>Всего ответов</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in statistics %}
+            <tr>
+                <td>{{ item.question_text }}</td>
+                <td>{{ item.agree_count }}</td>
+                <td>{{ item.disagree_count }}</td>
+                <td>{{ item.agree_count + item.disagree_count }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

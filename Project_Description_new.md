@@ -1,4 +1,6 @@
-<div style="font: bold normal 110% sans-serif; color: #8A2BE2; border-bottom: 5px double #8A2BE2; background-color:#2A0B52; padding: 5px;"></div>   
+<div style="font: bold normal 110% sans-serif; color: #8A2BE2; 
+border-bottom: 5px double green; 
+background-color:; padding: 5px;"></div>       
 
 # <a id="s1"><font color="green">1. Описание проекта</font></a>  
 "Community Pulse" — это интерактивная платформа, где анонимные пользователи могут создавать вопросы на 
@@ -13,7 +15,7 @@
 вместе с папкой БД "instance"), если они есть, и заново их создать:
 ```
 flask db init
-flask db migrate
+flask db migrate -m "_______"
 flask db upgrade
 ```
 2. И только ПОТОМ запускать приложение:
@@ -28,8 +30,12 @@ python run.py
 
 <a id="img1" style="margin: 40px; color:#808080;">Fig. 1 - Код приложения: app.js, часть 1.</a>
 
-4. В файлах <a>http_.http</a> выполнить запросы на СОЗДАНИЕ юзеров, вопросов и 
-ответов на них. А так же сделать вывод запросов со статистикой.  
+4. В файлах <a>http_.http</a> выполнить <span style="color:#8A2BE2">__ЗАПРОСЫ__ на создание</span>: 
+   - юзеров, 
+   - категорий,
+   - вопросов,
+   - ответов на вопросы. 
+   - А так же сделать вывод запросов со статистикой.  
 <div style="font: bold normal 110% sans-serif; color: #8A2BE2; white-space: pre; border-top: 2px dotted #008000; padding: 5px;"></div>  
 
 
@@ -100,15 +106,19 @@ link: https://player.vimeo.com/video/1092444197?h=4fc42a8cb4
 11.06.2025
 Video: Python Adv 8: Flask: Summary session 2 (Повторение, решение задач)
 link: https://player.vimeo.com/video/1092439106?h=1ae131892c
+<div style="font: bold normal 110% sans-serif; color: #8A2BE2; white-space: pre; border-top: 2px dotted #008000; padding: 5px;"></div>  
 
 
 
 
 ---
-<div style="font: bold normal 110% sans-serif; color: #8A2BE2; white-space: pre; border-top: 2px dotted #008000; padding: 5px;"></div>  
 
+
+После всего сделать файл с *requirements.txt*.
 
 `pip list` - для просмотра установленных библиотек.  
 `pip freeze > requirements.txt` - для импорта списка библиотек в *requirements.txt*.  
 `pip install -r requirement.txt` - для установки в скаченном проекте необходимых библиотек.  
 
+[//]: # (темно-фиолетовый #2A0B52)
+<div style="font: bold normal 110% sans-serif; color: #8A2BE2; white-space: pre; border-top: 2px dotted #008000; padding: 5px;"></div>  

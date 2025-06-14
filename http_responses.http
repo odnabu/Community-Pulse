@@ -12,15 +12,19 @@ content-type: application/json
 POST http://127.0.0.1:5000/responses/ HTTP/1.1
 content-type: application/json
 
-# VARIANTS
+# ___ Users:
+# user 1: Ich Ich_123                   # user 4: Falkor 456Falkor
+# user 2: Man Man_456                   # user 5: Noname 000N
+# user 3: Masiya 123Masiya              # user 6: Test for Delete Anon123
+# ___ Responses - VARIANTS:
 # q1, user 3: Yes, but it was originally created by people. And now it has become a miracle.
 # q_, user _: _
 
 {
-    "question_id": 2,
-    "is_agree": true,
+    "question_id": 13,
+    "is_agree": false,
     "text": "",
-    "user_id": 3
+    "user_id": 4
 }
 
 ### Responses - GET - получить ответ по ID (ответ 2) из БД. Ввести эндпоинт /1.

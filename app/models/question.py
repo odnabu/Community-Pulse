@@ -25,6 +25,10 @@ class Question(db.Model):
         return f'Question: {self.text}'
 
 
+
+
+""" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%____      STATISTICS     ____%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% """
+
 class Statistic(db.Model):
     __tablename__ = 'statistics'
 

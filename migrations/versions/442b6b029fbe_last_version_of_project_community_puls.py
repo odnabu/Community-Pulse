@@ -1,8 +1,8 @@
-"""empty message
+"""Last Version of project Community Puls
 
-Revision ID: 752d1b6448df
+Revision ID: 442b6b029fbe
 Revises: 
-Create Date: 2025-06-13 07:59:39.132490
+Create Date: 2025-06-13 12:25:34.549679
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '752d1b6448df'
+revision = '442b6b029fbe'
 down_revision = None
 branch_labels = None
 depends_on = None

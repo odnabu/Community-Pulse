@@ -3,8 +3,8 @@
 from flask import Blueprint, jsonify, request
 from pydantic import ValidationError
 from app.models.response import Response
-from app.models.question import Question
-from app.schemas.common import MessageResponse
+from app.models.question import Question, Statistic
+from app.schemas.common import MessageResponse, StatisticSchema
 from app.schemas.responses import ResponseCreate, ResponseSchema, ResponseUpdate
 from app.models import db
 import logging
@@ -37,21 +37,67 @@ def get_responses():
 
 
 # ===============================================================================================================
-# creating a function to CREATE a response with method "POST"
+# # creating a function to CREATE a response with method "POST"
+# @responses_bp.route('/', methods=['POST'])
+# def create_response():
+#     input_data = request.get_json()
+#     try:
+#         response_data = ResponseCreate(**input_data)
+#         response = Response(question_id=response_data.question_id,
+#                             is_agree=response_data.is_agree,
+#                             text=response_data.text,
+#                             user_id=response_data.user_id)
+#         db.session.add(response)
+#         db.session.commit()
+#         return jsonify(MessageResponse(message="Your response was created!").model_dump()), 200
+#     except ValidationError as e:
+#         return jsonify({'error': e.errors}), 400
+
+# ОБНОВЛЕННАЯ функция для СОЗДАНИЯ (CREATE) ответа на вопрос методом "POST" и сразу же
+# ЗАПИСЬЮ статистики в таблицу STATISTICS:
 @responses_bp.route('/', methods=['POST'])
 def create_response():
     input_data = request.get_json()
     try:
         response_data = ResponseCreate(**input_data)
-        response = Response(question_id=response_data.question_id,
-                            is_agree=response_data.is_agree,
-                            text=response_data.text,
-                            user_id=response_data.user_id)
+
+        # Создание нового ответа  --->  ТУТ можно было бы доработать размещение только ОДНОГО ответа
+        # от одного пользователя (см. закомментированный код).
+        response = Response(
+            question_id=response_data.question_id,
+            is_agree=response_data.is_agree,
+            text=response_data.text,
+            user_id=response_data.user_id
+        )
+        # if not response.is_agree:
+        #     db.session.add(response)
+        # else:
+        #     return f"You have sent a response on this question: {response.text} yet."
         db.session.add(response)
+
+        # Обновление статистики
+        stat = Statistic.query.get(response_data.question_id)
+        if not stat:
+            # Если записи ещё нет — создаём новую
+            stat = Statistic(
+                question_id=response_data.question_id,
+                agree_count=1 if response_data.is_agree else 0,
+                disagree_count=0 if response_data.is_agree else 1
+            )
+            db.session.add(stat)
+        else:
+            # Если запись есть — обновляем
+            if response_data.is_agree:
+                stat.agree_count += 1
+            else:
+                stat.disagree_count += 1
+
         db.session.commit()
-        return jsonify(MessageResponse(message="Your response was created!").model_dump()), 200
+        return jsonify(MessageResponse(message="Your response was created and statistics updated!").model_dump()), 200
+
     except ValidationError as e:
-        return jsonify({'error': e.errors}), 400
+        return jsonify({'error': e.errors()}), 400
+
 
 
 # ===============================================================================================================
@@ -140,4 +186,78 @@ def get_disagree_count():
 def get_response_count_for_question(question_id):
     count = db.session.query(Response).filter_by(question_id=question_id).count()
     return jsonify(MessageResponse(message={"question_id": question_id, "response_count": count}).model_dump()), 200
+
+
+# ===============================================================================================================
+# Красивый вывод КАРТОЧЕК со статистикой на странице браузера:
+from flask import render_template
+from app.models.question import Question
+
+@responses_bp.route('/statistics/view', methods=['GET'])
+def show_statistics_html():
+    questions = Question.query.all()
+    stats = []
+
+    for q in questions:
+        agree = sum(1 for r in q.responses if r.is_agree)
+        disagree = sum(1 for r in q.responses if not r.is_agree)
+        stats.append({
+            "question": q.text,
+            "agree": agree,
+            "disagree": disagree
+        })
+
+    return render_template("statistics_view.html", stats=stats)
+
+
+# ===============================================================================================================
+# Расширенный API /statistics/, который:
+#   1. Отображает статистику по всем вопросам.
+#   2. Показывает:
+#       - текст вопроса,
+#       - количество согласных (agree_count),
+#       - количество несогласных (disagree_count),
+#       - общее количество ответов.
+@responses_bp.route('/statistics/full/', methods=['GET'])
+def get_full_statistics():
+    statistics = db.session.query(Statistic).all()
+    result = []
+
+    for stat in statistics:
+        question = Question.query.get(stat.question_id)
+        if question:
+            result.append(
+                StatisticSchema(
+                    question_text=question.text,
+                    agree_count=stat.agree_count,
+                    disagree_count=stat.disagree_count
+                ).model_dump()
+            )
+
+    if result:
+        return jsonify(MessageResponse(message=result).model_dump()), 200
+    else:
+        return jsonify(MessageResponse(message="No statistics found").model_dump()), 404
+
+
+
+# ===============================================================================================================
+# HTML-шаблон для вывода статистики в браузере:
+@responses_bp.route('/statistics-html', methods=['GET'])
+def statistics_html():
+    statistics = db.session.query(Statistic).all()
+    result = []
+
+    for stat in statistics:
+        question = Question.query.get(stat.question_id)
+        if question:
+            result.append({
+                "question_text": question.text,
+                "agree_count": stat.agree_count,
+                "disagree_count": stat.disagree_count
+            })
+
+    return render_template('statistics_full.html', statistics=result)
+
+
 

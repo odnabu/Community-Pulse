@@ -17,7 +17,7 @@ categories_bp = Blueprint('categories', __name__, url_prefix='/categories')
 
 
 
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# ===============================================================================================================
 # to GET all categories
 @categories_bp.route('/', methods=['GET'])
 def get_categories():
@@ -30,7 +30,7 @@ def get_categories():
         return jsonify(MessageResponse(message="No categories found").model_dump()), 404
 
 
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# ===============================================================================================================
 # to CREATE a new category
 @categories_bp.route('/', methods=['POST'])
 def create_category():
@@ -50,7 +50,7 @@ def create_category():
 
 
 
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# ===============================================================================================================
 # to GET one category by ID
 @categories_bp.route('/<int:id>', methods=['GET'])
 def get_category(id):
@@ -66,7 +66,7 @@ def get_category(id):
 
 
 
-# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# ===============================================================================================================
 # Статистика:
 @categories_bp.route("/categories/<int:category_id>", methods=["GET"])
 def get_category_stats(category_id):
@@ -99,4 +99,14 @@ def get_category_stats(category_id):
         "category_name": category.name,
         "questions": questions_data
     })
+
+
+# ===============================================================================================================
+# Страница с вопросами, отсортированными по категориям
+from flask import render_template
+
+@categories_bp.route('/view', methods=['GET'])
+def view_categories_with_questions():
+    categories = Category.query.all()
+    return render_template("questions_by_category.html", categories=categories)
 

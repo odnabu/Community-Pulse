@@ -22,3 +22,17 @@ GET http://127.0.0.1:5000/questions/statistics/count
 
 ### Statistics - GET - Сколько всего пользователей зарегистрировано:
 GET http://127.0.0.1:5000/users/statistics/count
+
+### Statistics - GET - получить статистику по ответам на странице БРАУЗЕРА:
+GET http://127.0.0.1:5000/responses/statistics/view
+
+### Statistics - GET - список вопросов, отсортированных по категориям на странице БРАУЗЕРА:
+GET http://127.0.0.1:5000/categories/view
+
+### Statistics - GET - получить ПОЛНУЮ статистику по всем вопросам:
+GET http://127.0.0.1:5000/responses/statistics/full/ HTTP/1.1
+content-type: application/json; charset=UTF-8
+
+### Statistics - GET - получить ПОЛНУЮ статистику по всем вопросам в БРАУЗЕРЕ
+GET http://127.0.0.1:5000/responses/statistics-html HTTP/1.1
+
